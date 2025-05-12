@@ -45,6 +45,12 @@ def user():
 
     with criar:
         with st.form("my_form"):
+            def limpaForm():
+                st.session_state.input_user_subject
+                st.session_state.input_user_name
+                st.session_state.input_user_email
+            
+
             st.write(f"Criar usuário no qlik cloud {TENANT_ALIAS_HOSTNAME}")
 
             label_Obrigatorio =  "* Obrigatório"
@@ -53,9 +59,9 @@ def user():
             label_user_email = "E-mail"
             user_placeholder = "Digite o {} do usuário"
 
-            user_subject = st.text_input(label=label_user_subject + label_Obrigatorio if CREATE_USER_SUBJECT_MANDATORY=='True' else label_user_subject, placeholder=user_placeholder.format(label_user_subject))
-            user_name = st.text_input(label=label_user_name,placeholder=user_placeholder.format(label_user_name))
-            user_email = st.text_input(label=label_user_email + label_Obrigatorio if CREATE_USER_EMAIL_MANDATORY=='True' else label_user_email ,placeholder=user_placeholder.format(label_user_email))
+            user_subject = st.text_input(label=label_user_subject + label_Obrigatorio if CREATE_USER_SUBJECT_MANDATORY=='True' else label_user_subject, placeholder=user_placeholder.format(label_user_subject),key = 'input_user_subject')
+            user_name = st.text_input(label=label_user_name,placeholder=user_placeholder.format(label_user_name),key = 'input_user_name')
+            user_email = st.text_input(label=label_user_email + label_Obrigatorio if CREATE_USER_EMAIL_MANDATORY=='True' else label_user_email ,placeholder=user_placeholder.format(label_user_email),key = 'input_user_email')
 
           
 
@@ -100,6 +106,7 @@ def user():
                             )
 
                             st.dataframe(df,hide_index=True)
+                            #limpaForm()
                         else:
                             st.warning(responseText['errors'][0]['title'], icon="⚠️")
 
